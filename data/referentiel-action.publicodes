@@ -1,0 +1,564 @@
+référentiel:
+  titre: Règle de calcul du référentiel d'actions
+
+référentiel . ID83:
+  titre: >
+    Aux prochaines courses, choisir exclusivement des viandes ou poissons
+    peu émetteurs, venant d'élevage respecteux de l'environnement et
+    d’origine France
+  avec:
+    empreinte carbone:
+      valeur:
+        somme:
+          - alimentation . repas . viande faible empreinte . différence par semaine
+          - alimentation . repas . poisson faible empreinte . différence par semaine
+
+    empreinte carbone max:
+      valeur: empreinte carbone
+      contexte:
+        alimentation . plats . végétalien . nombre: 0
+        alimentation . plats . viande rouge . nombre: 7
+        alimentation . plats . viande blanche . nombre: 4
+        alimentation . plats . végétarien . nombre: 0
+        alimentation . plats . poisson gras . nombre: 0
+        alimentation . plats . poisson blanc . nombre: 3
+
+    empreinte carbone annuelle:
+      valeur:
+        somme:
+          - alimentation . repas . viande faible empreinte
+          - alimentation . repas . poisson faible empreinte
+
+    empreinte eau:
+      valeur: empreinte carbone
+      contexte:
+        métrique: "'eau'"
+
+    empreinte eau max:
+      valeur: empreinte carbone
+      note: >
+        On ne prend pas en compte les poissons gras car ils ont une empreinte
+        eau plus élevée que les poissons blancs.
+      contexte:
+        métrique: "'eau'"
+        alimentation . plats . végétalien . nombre: 0
+        alimentation . plats . viande rouge . nombre: 7
+        alimentation . plats . viande blanche . nombre: 7
+        alimentation . plats . végétarien . nombre: 0
+        alimentation . plats . poisson gras . nombre: 0
+        alimentation . plats . poisson blanc . nombre: 0
+
+    empreinte eau annuelle:
+      valeur: empreinte carbone annuelle
+      contexte:
+        métrique: "'eau'"
+
+référentiel . ID85:
+  titre: >
+    Choisir les lieux ou moments où manger des produits d'origine animale vous
+    fait plaisir et réduire le reste du temps
+  avec:
+    empreinte carbone:
+      valeur: alimentation . repas . réduire viande . max 2 par semaine . différence par semaine
+
+    empreinte carbone max:
+      valeur: alimentation . repas . réduire viande . max 2 par semaine . différence par semaine
+      contexte:
+        alimentation . plats . végétalien . nombre: 0
+        alimentation . plats . viande rouge . nombre: 7
+        alimentation . plats . viande blanche . nombre: 7
+        alimentation . plats . végétarien . nombre: 0
+        alimentation . plats . poisson gras . nombre: 0
+        alimentation . plats . poisson blanc . nombre: 0
+
+    empreinte carbone annuelle:
+      valeur: alimentation . repas . réduire viande . max 2 par semaine
+
+    empreinte eau:
+      valeur: empreinte carbone
+      contexte:
+        métrique: "'eau'"
+
+    empreinte eau max:
+      valeur: empreinte carbone max
+      contexte:
+        métrique: "'eau'"
+
+    empreinte eau annuelle:
+      valeur: empreinte carbone annuelle
+      contexte:
+        métrique: "'eau'"
+
+référentiel . ID76:
+  titre: >
+    Choisir un régime cible moins carné vers lequel vous pourriez tendre qui a
+    moins d’impact sur l’environnement
+  avec:
+    empreinte carbone:
+
+    empreinte carbone max:
+
+    empreinte carbone annuelle:
+      valeur: alimentation . devenir végétarien
+
+    empreinte eau:
+
+    empreinte eau max:
+
+    empreinte eau annuelle:
+      valeur: alimentation . devenir végétarien
+      contexte:
+        métrique: "'eau'"
+
+référentiel . ID90:
+  titre: >
+    Composer son panier uniquement de produits locaux et de saison aux
+    prochaines courses
+  avec:
+    empreinte carbone:
+      valeur: empreinte carbone annuelle / commun . semaines par an
+      unité: kgCO2e/semaine
+
+    empreinte carbone max:
+
+    empreinte carbone annuelle:
+      valeur: alimentation . bonus . manger local
+
+    empreinte eau:
+      valeur: empreinte eau annuelle / commun . semaines par an
+
+    empreinte eau max:
+
+    empreinte eau annuelle:
+      valeur: empreinte carbone annuelle
+      contexte:
+        métrique: "'eau'"
+
+référentiel . ID73:
+  titre: Cuisiner un repas exclusivement avec des protéines d'origine végétale
+  avec:
+    empreinte carbone:
+      valeur: alimentation . plats . viande blanche . empreinte - alimentation . plats . végétalien . empreinte
+      unité: kgCO2e/repas
+
+    empreinte carbone max:
+      valeur: alimentation . plats . viande rouge . empreinte - alimentation . plats . végétalien . empreinte
+      unité: kgCO2e/repas
+
+    empreinte carbone annuelle:
+      valeur: alimentation . devenir végétalien
+
+    empreinte eau:
+      valeur: alimentation . plats . viande blanche . empreinte - alimentation . plats . végétalien . empreinte
+      unité: l/repas
+      contexte:
+        métrique: "'eau'"
+
+    empreinte eau max:
+      valeur: alimentation . plats . viande rouge . empreinte - alimentation . plats . végétalien . empreinte
+      unité: l/repas
+      contexte:
+        métrique: "'eau'"
+
+    empreinte eau annuelle:
+      valeur: alimentation . devenir végétalien
+      contexte:
+        métrique: "'eau'"
+
+référentiel . ID56:
+  titre: Cuisiner une recette anti-gaspillage
+  avec:
+    empreinte carbone annuelle:
+      valeur: alimentation . déchets . gestes . empreinte gaspillage alimentaire
+      contexte:
+        alimentation . déchets . quantité jetée: "'réduction'"
+
+référentiel . ID84:
+  titre: Essayer un jour fixe par semaine sans viande
+  avec:
+    empreinte carbone:
+      valeur: ID73 . empreinte carbone * 2
+
+    empreinte carbone max:
+      valeur: ID73 . empreinte carbone max * 2
+
+    empreinte carbone annuelle:
+      valeur: ID73 . empreinte carbone annuelle * 2
+
+    empreinte eau:
+      valeur: ID73 . empreinte eau * 2
+
+    empreinte eau max:
+      valeur: ID73 . empreinte eau max * 2
+
+    empreinte eau annuelle:
+      valeur: ID73 . empreinte eau annuelle * 2
+
+référentiel . ID81:
+  titre: Essayer un petit déjeuner sans produits d'origine animale (lait, yaourt, oeufs, bacon...)
+  avec:
+    empreinte carbone:
+      valeur: alimentation . petit déjeuner - alimentation . petit déjeuner . végétalien
+      unité: kgCO2e/repas
+
+    empreinte carbone max:
+      valeur: alimentation . petit déjeuner . britannique - alimentation . petit déjeuner . végétalien
+      unité: kgCO2e/repas
+
+    empreinte carbone annuelle:
+      valeur: empreinte carbone * commun . jours par an
+
+    empreinte eau:
+      valeur: alimentation . petit déjeuner - alimentation . petit déjeuner . végétalien
+      unité: l/repas
+      contexte:
+        métrique: "'eau'"
+
+    empreinte eau max:
+      valeur: alimentation . petit déjeuner . britannique - alimentation . petit déjeuner . végétalien
+      unité: l/repas
+      contexte:
+        métrique: "'eau'"
+
+    empreinte eau annuelle:
+      valeur: empreinte eau * commun . jours par an
+
+référentiel . ID75:
+  titre: Remplacer la viande rouge par une viande blanche ou du poisson dans un repas cette semaine
+  avec:
+    empreinte carbone:
+      valeur: alimentation . plats . viande rouge . empreinte - alimentation . plats . viande blanche . empreinte
+      unité: kgCO2e/repas
+
+    empreinte carbone max:
+      valeur: alimentation . plats . viande rouge . empreinte - alimentation . plats . poisson gras . empreinte
+      unité: kgCO2e/repas
+
+    empreinte carbone annuelle:
+      valeur: alimentation . repas . viande faible empreinte
+
+    empreinte eau:
+      valeur: alimentation . plats . viande rouge . empreinte - alimentation . plats . viande blanche . empreinte
+      unité: l/repas
+      contexte:
+        métrique: "'eau'"
+
+    empreinte eau max:
+      valeur: alimentation . plats . viande rouge . empreinte - alimentation . plats . poisson gras . empreinte
+      unité: l/repas
+      contexte:
+        métrique: "'eau'"
+
+    empreinte eau annuelle:
+      valeur: alimentation . repas . viande faible empreinte
+      contexte:
+        métrique: "'eau'"
+
+référentiel . ID18:
+  titre: Remplacer son café ou son thé par une tasse de chicorée dans la semaine
+  avec:
+    empreinte carbone:
+      valeur:
+        produit:
+          - (alimentation . boisson . tasse de café - alimentation . boisson . tasse de chicorée)
+          - alimentation . boisson . chaude . café . nombre
+          - commun . jours par semaine
+      unité: kgCO2e/semaine
+
+    empreinte carbone max:
+      valeur:
+        produit:
+          - (alimentation . boisson . tasse de café - alimentation . boisson . tasse de chicorée)
+          - 2 tasse/jour
+          - commun . jours par semaine
+      unité: kgCO2e/semaine
+
+    empreinte carbone annuelle:
+      valeur: alimentation . boisson . réduire café . remplace par chicorée
+
+    empreinte eau:
+      valeur:
+        produit:
+          - (alimentation . boisson . tasse de café - alimentation . boisson . tasse de chicorée)
+          - alimentation . boisson . chaude . café . nombre
+          - commun . jours par semaine
+      unité: l/semaine
+      contexte:
+        métrique: "'eau'"
+
+    empreinte eau max:
+      valeur:
+        produit:
+          - (alimentation . boisson . tasse de café - alimentation . boisson . tasse de chicorée)
+          - 2 tasse/jour
+          - commun . jours par semaine
+      unité: l/semaine
+      contexte:
+        métrique: "'eau'"
+
+    empreinte eau annuelle:
+      valeur: alimentation . boisson . réduire café . remplace par chicorée
+      contexte:
+        métrique: "'eau'"
+
+référentiel . ID23:
+  titre: Baisser le chauffage lors de vos absences pendant 1 semaine
+  note: >
+    On divise par 2 de façon relativement arbitraire pour estimer la réduction
+    uniquement lors des absences. Il faudrait trouver une meilleur information.
+  avec:
+    empreinte carbone:
+      valeur: empreinte carbone annuelle / commun . semaines par an
+      unité: kgCO2e/semaine
+
+    empreinte carbone max:
+      valeur: empreinte carbone annuelle / commun . semaines par an
+      unité: kgCO2e/semaine
+      contexte:
+        logement . chauffage . baisse température . nombre degrés: 3 degré
+
+    empreinte carbone annuelle:
+      valeur: logement . chauffage . baisse température * 50%
+      unité: kgCO2e
+
+référentiel . ID128:
+  titre: Mesurer et régler la température chez vous cette semaine
+  avec:
+    empreinte carbone:
+      valeur: empreinte carbone annuelle / commun . semaines par an
+      unité: kgCO2e/semaine
+
+    empreinte carbone max:
+      valeur: empreinte carbone annuelle / commun . semaines par an
+      unité: kgCO2e/semaine
+      contexte:
+        logement . chauffage . baisse température . nombre degrés: 3 degré
+
+    empreinte carbone annuelle:
+      valeur: logement . chauffage . baisse température
+      unité: kgCO2e
+
+référentiel . ID120:
+  titre: Installer des mousseurs ou une douche économe
+  avec:
+    empreinte eau:
+      valeur: logement . eau domestique . bains et douches . douches * 50%
+      unité: l
+      contexte:
+        métrique: "'eau'"
+
+    empreinte eau max:
+      valeur: logement . eau domestique . bains et douches . douches * 50%
+      unité: l
+      contexte:
+        métrique: "'eau'"
+        logement . eau domestique . bains et douches . habitude: "'douche longue'"
+
+référentiel . ID119:
+  titre: Optimiser votre chasse d'eau
+  avec:
+    empreinte eau:
+      valeur: logement . eau domestique . toilettes
+      unité: l
+      contexte:
+        métrique: "'eau'"
+        logement . eau domestique . toilettes . type: "'double chasse'"
+
+référentiel . ID8:
+  titre: Appliquer des pratiques d’éco-conduite cette semaine
+  avec:
+    empreinte carbone:
+      valeur: transport . voiture . éco-conduite / commun . semaines par an
+      unité: kgCO2e/semaine
+
+    empreinte carbone max:
+      valeur: empreinte carbone
+      unité: kgCO2e/semaine
+      contexte:
+        transport . voiture . km: 20000 km
+
+    empreinte carbone annuelle:
+      valeur: transport . voiture . éco-conduite
+
+référentiel . ID156:
+  titre: Combiner les transports sur un trajet cette semaine
+  note: Pour avoir un ordre d'idée rapidement, je réutilise l'action boulot sans voiture.
+  avec:
+    empreinte carbone:
+      valeur: empreinte carbone annuelle / commun . semaines par an
+      unité: kgCO2e/semaine
+
+    empreinte carbone max:
+      valeur: empreinte carbone
+      unité: kgCO2e/semaine
+      contexte:
+        transport . voiture . boulot . distance . km aller: 15 km/trajet
+        transport . voiture . boulot . jours travaillés en voiture: 5 jour/semaine
+
+    empreinte carbone annuelle:
+      valeur: transport . voiture . boulot . sans voiture
+
+référentiel . ID6:
+  titre: Faire un trajet à pied ou à vélo plutôt qu’en voiture au moins 1 fois cette semaine
+  note: >
+    Il ne semble pas pertinent de prendre en compte l'empreinte de la
+    construction ici. A revoir peut-être pour l'empreinte annuelle notamment.
+  avec:
+    empreinte carbone:
+      valeur: transport . voiture . usage / transport . voiture . voyageurs
+      contexte:
+        transport . voiture . utilisateur: "'propriétaire'"
+        transport . voiture . km: 5 km
+
+    empreinte carbone max:
+      valeur: transport . voiture . usage / transport . voiture . voyageurs
+      contexte:
+        transport . voiture . utilisateur: "'propriétaire'"
+        transport . voiture . gabarit: "'SUV'"
+        transport . voiture . km: 20 km
+
+    empreinte carbone annuelle:
+      valeur: empreinte carbone * commun . semaines par an
+
+référentiel . ID11:
+  titre: Faire un trajet cette semaine avec 1 personne de plus dans la voiture
+  avec:
+    empreinte carbone:
+      valeur: référentiel . ID6 . empreinte carbone
+      unité: kgCO2e/trajet
+      contexte:
+        transport . voiture . voyageurs: 2
+
+    empreinte carbone max:
+      valeur: référentiel . ID6 . empreinte carbone max
+      unité: kgCO2e/trajet
+      contexte:
+        transport . voiture . voyageurs: 2
+
+    empreinte carbone annuelle:
+      valeur: empreinte carbone * commun . semaines par an
+
+référentiel . ID148:
+  titre: Faire au moins un achat en seconde main au lieu de neuf ce mois-ci
+  avec:
+    empreinte carbone:
+      valeur: divers . autres produits . réduire / commun . mois par an
+
+    empreinte carbone max:
+      valeur: divers . autres produits . réduire / commun . mois par an
+      contexte:
+        divers . autres produits . niveau de dépenses: "'important'"
+
+    empreinte carbone annuelle:
+      valeur: empreinte carbone * commun . semaines par an
+
+référentiel . ID197:
+  titre: Pour le prochain achat, choisir un meuble d'occasion ou fabriqué à partir de matériaux durables
+  note: On allonge la durée de vie pour simuler l'achat d'occasion.
+  avec:
+    empreinte carbone:
+      valeur: divers . ameublement . meubles . grand meuble . empreinte amortie - empreinte grand meuble amortie 20 ans
+
+    empreinte carbone annuelle:
+      valeur: empreinte carbone * divers . ameublement . meubles . grand meuble . nombre
+
+    empreinte grand meuble amortie 20 ans:
+      valeur: divers . ameublement . meubles . grand meuble . empreinte amortie
+      contexte:
+        divers . ameublement . meubles . grand meuble . durée: 20
+
+référentiel . ID29:
+  titre: Réparer ou faire réparer un objet dans la semaine
+  avec:
+    empreinte carbone:
+      valeur: empreinte carbone annuelle / divers . électroménager . appareils . nombre total
+
+    empreinte carbone max:
+      valeur: empreinte carbone
+      contexte:
+        divers . ameublement . préservation: "'faible'"
+
+    empreinte carbone annuelle:
+      valeur: divers . électroménager . appareils . allongement
+
+référentiel . ID105:
+  titre: Réparer un vêtement abîmé
+  note: >
+    On modélise la réparation comme une augmentation de l'indice de durabilité.
+  avec:
+    empreinte carbone:
+      valeur: empreinte carbone annuelle / divers . textile . nombre total
+
+    empreinte carbone annuelle:
+      valeur: divers . textile - empreinte textile avec durabilité supérieur
+
+    empreinte eau:
+      valeur: empreinte eau annuelle / divers . textile . nombre total
+
+    empreinte eau annuelle:
+      valeur: divers . textile - empreinte textile avec durabilité supérieur
+      contexte:
+        métrique: "'eau'"
+
+    empreinte textile avec durabilité supérieur:
+      valeur: divers . textile
+      contexte:
+        divers . textile . indice de durabilité: 1.5
+
+référentiel . ID117:
+  titre: Prendre soin d'au moins un appareil électronique cette semaine
+  avec:
+    empreinte carbone:
+      valeur: empreinte carbone annuelle / commun . semaines par an
+
+    empreinte carbone max:
+      valeur: empreinte carbone
+      contexte:
+        divers . ameublement . préservation: "'faible'"
+
+    empreinte carbone annuelle:
+      valeur: divers . numérique . appareils . allongement
+
+    empreinte eau:
+      valeur: empreinte eau annuelle / commun . semaines par an
+
+    empreinte eau max:
+      valeur: divers . numérique . appareils . allongement / commun . semaines par an
+      contexte:
+        divers . ameublement . préservation: "'maximum'"
+        métrique: "'eau'"
+
+    empreinte eau annuelle:
+      valeur: divers . numérique . appareils . allongement
+      contexte:
+        métrique: "'eau'"
+        divers . ameublement . préservation: "'maximum'"
+
+référentiel . ID99:
+  titre: Donner une seconde vie à un meuble dont vous voulez vous débarrasser
+  avec:
+    empreinte carbone:
+      valeur: empreinte carbone annuelle / commun . semaines par an
+
+    empreinte carbone max:
+      valeur: empreinte carbone
+      contexte:
+        divers . ameublement . préservation: "'faible'"
+
+    empreinte carbone annuelle:
+      valeur: divers . ameublement . meubles . allongement
+
+    empreinte eau:
+      valeur: empreinte eau annuelle / commun . semaines par an
+
+    empreinte eau max:
+      valeur: divers . numérique . appareils . allongement / commun . semaines par an
+      contexte:
+        divers . ameublement . préservation: "'maximum'"
+        métrique: "'eau'"
+
+    empreinte eau annuelle:
+      valeur: divers . numérique . appareils . allongement
+      contexte:
+        métrique: "'eau'"
+        # divers . ameublement . préservation: "'maximum'"
